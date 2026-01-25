@@ -2,13 +2,31 @@
 import { GoogleGenAI } from "@google/genai";
 import { RESUME_DATA } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+let ai: GoogleGenAI | null = null;
+
+const getAiClient = () => {
+  if (!ai) {
+    const apiKey = process.env.API_KEY;
+    // Check if key exists and is not empty
+    if (!apiKey || apiKey.trim() === '') {
+      console.warn("Gemini API Key is missing or empty.");
+      return null;
+    }
+    ai = new GoogleGenAI({ apiKey });
+  }
+  return ai;
+};
 
 export const sendMessageToGemini = async (
   message: string,
   history: { role: string; text: string }[]
 ): Promise<string> => {
   try {
+    const client = getAiClient();
+    if (!client) {
+      return "I'm currently offline (API Key missing). Please contact the developer directly via WhatsApp.";
+    }
+
     const model = 'gemini-3-flash-preview';
     
     const chatHistory = history.map(msg => ({
@@ -16,7 +34,7 @@ export const sendMessageToGemini = async (
       parts: [{ text: msg.text }]
     }));
 
-    const chat = ai.chats.create({
+    const chat = client.chats.create({
       model: model,
       config: {
         systemInstruction: `You are Weby AI, the AI assistant for Webhub, a premier software development agency founded by Meet Gadhavi.
