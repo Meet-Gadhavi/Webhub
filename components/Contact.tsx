@@ -5,10 +5,10 @@ import AnimatedWebhub from './AnimatedWebhub';
 import FluidText from './FluidText';
 
 interface ContactProps {
-  onNavigate: (page: string) => void;
+  onOpenPage: (page: string) => void;
 }
 
-const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
+const Contact: React.FC<ContactProps> = ({ onOpenPage }) => {
   return (
     <footer className="relative bg-neutral-950 pt-24 pb-12 border-t border-neutral-900 overflow-hidden">
         {/* Decorative Gradients */}
@@ -52,10 +52,11 @@ const Contact: React.FC<ContactProps> = ({ onNavigate }) => {
 
         <div className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
              <div className="flex gap-6 flex-wrap justify-center md:justify-start">
-                 <button onClick={() => onNavigate('about')} className="hover:text-neutral-400 transition-colors">About Us</button>
-                 <button onClick={() => onNavigate('contact')} className="hover:text-neutral-400 transition-colors">Contact Us</button>
-                 <button onClick={() => onNavigate('privacy')} className="hover:text-neutral-400 transition-colors">Privacy Policy</button>
-                 <button onClick={() => onNavigate('terms')} className="hover:text-neutral-400 transition-colors">Terms of Service</button>
+                 <button onClick={() => onOpenPage('about')} className="hover:text-neutral-400 transition-colors">About Us</button>
+                 <button onClick={() => onOpenPage('contact')} className="hover:text-neutral-400 transition-colors">Contact Us</button>
+                 <button onClick={() => onOpenPage('faq')} className="hover:text-neutral-400 transition-colors">FAQ</button>
+                 <button onClick={() => onOpenPage('privacy')} className="hover:text-neutral-400 transition-colors">Privacy Policy</button>
+                 <button onClick={() => onOpenPage('terms')} className="hover:text-neutral-400 transition-colors">Terms of Service</button>
              </div>
              <p className="text-center md:text-right flex items-center gap-1">© {new Date().getFullYear()} <AnimatedWebhub className="text-xs" />. Founded by Meet Gadhavi.</p>
         </div>

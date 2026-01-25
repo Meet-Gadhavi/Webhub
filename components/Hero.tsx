@@ -6,6 +6,7 @@ import { Feedback } from '../types';
 import { BackgroundBeams } from './BackgroundBeams';
 import ParticleBackground from './ParticleBackground';
 import FluidText from './FluidText';
+import Button from './Button';
 
 interface HeroProps {
     feedbacks: Feedback[];
@@ -66,25 +67,29 @@ const Hero: React.FC<HeroProps> = ({ feedbacks, onConsult, onOpenConsultation })
         </p>
         
         <div className="mt-10 flex flex-col md:flex-row gap-4 justify-center items-center">
-            <button 
+            <Button 
                 onClick={handleConsultClick}
-                className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-full flex items-center gap-3 transition-all hover:scale-105 shadow-lg shadow-blue-900/20"
+                variant="primary"
+                icon={<ArrowDown size={18} />}
+                className="py-4 px-8 text-base"
             >
-                Get Free Consultation <ArrowDown size={18} />
-            </button>
-             <button 
+                Get Free Consultation
+            </Button>
+            <Button 
                 onClick={handleCallClick}
-                className="bg-transparent border border-neutral-700 hover:bg-neutral-800 text-white font-medium py-4 px-8 rounded-full flex items-center gap-3 transition-all backdrop-blur-sm"
+                variant="outline"
+                icon={<Phone size={18} />}
+                className="py-4 px-8 text-base"
             >
-                <Phone size={18} /> Call Now
-            </button>
+                Call Now
+            </Button>
         </div>
 
         {feedbacks.length > 0 && (
             <div className="mt-16 max-w-3xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
                 <div className="flex gap-8 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
                     {feedbacks.concat(feedbacks).map((fb, i) => (
-                        <div key={i} className="flex items-center gap-3 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-full px-5 py-2">
+                        <div key={i} className="flex items-center gap-3 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-lg px-5 py-2">
                              <span className="text-sm text-neutral-300 font-medium">"{fb.text}"</span>
                              <span className="text-xs text-neutral-500 uppercase tracking-wider">{fb.user}</span>
                         </div>

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
-import About from './components/About';
 import Projects from './components/Projects';
 import ProjectDetail from './components/ProjectDetail';
 import Contact from './components/Contact';
@@ -14,15 +13,15 @@ import NotificationToast from './components/NotificationToast';
 import TrustBadges from './components/TrustBadges';
 import Services from './components/Services';
 import Testimonials from './components/Testimonials';
-import FAQ from './components/FAQ';
 import WhyChooseUs from './components/WhyChooseUs';
 import HowItWorks from './components/HowItWorks';
 import Industries from './components/Industries';
 import ConsultationModal from './components/ConsultationModal';
 import Admin from './components/Admin';
 import WhyChooseWebhub from './components/WhyChooseWebhub';
+import Team from './components/Team';
 import AnimatedWebhub from './components/AnimatedWebhub';
-import { PrivacyPolicy, TermsOfService, AboutPage, ContactPage } from './components/FooterPages';
+import InfoModal from './components/InfoModal';
 import { Project, Notification, Feedback, SocialLinks } from './types';
 
 const INITIAL_PROJECTS: Project[] = [
@@ -77,7 +76,7 @@ const INITIAL_SOCIALS: SocialLinks = {
     email: 'nova.officialm63@gmail.com'
 };
 
-type ViewState = 'home' | 'services' | 'portfolio' | 'pricing' | 'about' | 'contact' | 'privacy' | 'terms' | 'admin';
+type ViewState = 'home' | 'services' | 'portfolio' | 'pricing' | 'admin';
 
 function App() {
   const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
@@ -90,6 +89,10 @@ function App() {
 
   const [isConsultModalOpen, setIsConsultModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<{name: string, price: string} | null>(null);
+  
+  // Info Modal State
+  const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
+  const [infoModalTab, setInfoModalTab] = useState('about');
 
   const addNotification = (message: string, type: 'success' | 'error' | 'info') => {
     const id = Date.now();
@@ -110,8 +113,11 @@ function App() {
       setIsConsultModalOpen(true);
   };
 
-  if (view === 'privacy') return <PrivacyPolicy onBack={() => setView('home')} />;
-  if (view === 'terms') return <TermsOfService onBack={() => setView('home')} />;
+  const openInfoPage = (page: string) => {
+      setInfoModalTab(page);
+      setIsInfoModalOpen(true);
+  };
+
   if (view === 'admin') return (
       <Admin 
         onBack={() => setView('home')} 
@@ -148,46 +154,44 @@ function App() {
                { id: 'services', label: 'SERVICES' },
                { id: 'portfolio', label: 'PORTFOLIO' },
                { id: 'pricing', label: 'PRICING' },
-               { id: 'about', label: 'ABOUT US' },
-               { id: 'contact', label: 'CONTACT' },
              ].map((item) => (
                <button 
                   key={item.id}
                   onClick={() => setView(item.id as ViewState)}
                   className="relative group px-3 py-1 cursor-pointer"
                >
-                  {/* Yellow Box Background - Expands from 0 to 100% on hover */}
                   <div className={`absolute top-0 bottom-0 left-0 right-0 bg-yellow-400 rounded-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] origin-left ${view === item.id ? 'w-full' : 'w-0 group-hover:w-full'}`}></div>
-                  
-                  {/* Text - Switches to black when hover or active (because background becomes yellow) */}
                   <span className={`relative z-10 transition-colors duration-300 ${view === item.id ? 'text-black' : 'text-neutral-300 group-hover:text-black'}`}>
                       {item.label}
                   </span>
                </button>
              ))}
+             {/* Info Pages Buttons */}
+             <button onClick={() => openInfoPage('about')} className="hover:text-white transition-colors">ABOUT US</button>
+             <button onClick={() => openInfoPage('contact')} className="hover:text-white transition-colors">CONTACT</button>
         </div>
 
         <div className="md:hidden">
-             <button onClick={() => setView('contact')} className="text-white text-sm border border-white/20 px-3 py-1 rounded-full">Menu</button>
+             <button onClick={() => openInfoPage('contact')} className="text-white text-sm border border-white/20 px-3 py-1 rounded-full">Menu</button>
         </div>
       </nav>
 
       <main>
         {view === 'home' && (
             <>
-                <Hero feedbacks={feedbacks} onConsult={() => setView('contact')} onOpenConsultation={handleOpenConsultation} />
+                <Hero feedbacks={feedbacks} onConsult={() => openInfoPage('contact')} onOpenConsultation={handleOpenConsultation} />
                 <TrustBadges />
                 <WhyChooseUs />
                 <Services />
-                <HowItWorks onNavigate={() => setView('services')} />
+                <HowItWorks onNavigate={() => openInfoPage('contact')} />
                 <Industries />
                 <Projects projects={projects} onProjectClick={setSelectedProject} title="Selected Projects" />
                 <Testimonials />
                 <WhyChooseWebhub />
-                <Pricing onPlanSelect={handleOpenPlanConsultation} />
+                <Team />
+                <Pricing onPlanSelect={handleOpenPlanConsultation} onGetStarted={() => openInfoPage('contact')} />
                 <SubscriptionScope />
-                <FAQ />
-                <Contact onNavigate={(page) => setView(page as ViewState)} />
+                <Contact onOpenPage={openInfoPage} />
             </>
         )}
         {view !== 'home' && (
@@ -197,19 +201,18 @@ function App() {
                 {view === 'pricing' && (
                     <>
                         <WhyChooseWebhub />
-                        <Pricing onPlanSelect={handleOpenPlanConsultation} />
+                        <Pricing onPlanSelect={handleOpenPlanConsultation} onGetStarted={() => openInfoPage('contact')} />
                         <SubscriptionScope />
                     </>
                 )}
-                {view === 'about' && <AboutPage onBack={() => setView('home')} />}
-                {view === 'contact' && <ContactPage onBack={() => setView('home')} />}
-                <Contact onNavigate={(page) => setView(page as ViewState)} />
+                <Contact onOpenPage={openInfoPage} />
             </div>
         )}
       </main>
 
       <AIChat />
       <ConsultationModal isOpen={isConsultModalOpen} onClose={() => setIsConsultModalOpen(false)} planDetails={selectedPlan} />
+      <InfoModal isOpen={isInfoModalOpen} initialTab={infoModalTab} onClose={() => setIsInfoModalOpen(false)} />
       {selectedProject && <ProjectDetail project={selectedProject} onClose={() => setSelectedProject(null)} />}
     </SmoothScroll>
   );

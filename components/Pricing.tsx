@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
-import { Check, X, Star, Zap, Shield, Globe, PenTool, Layout, Server, Mail, Code, ChevronDown, ChevronUp } from 'lucide-react';
+import { Check, X, Star, Zap, Shield, Globe, PenTool, Layout, Server, Mail, Code, ChevronDown, ChevronUp, Sparkles, ArrowRight } from 'lucide-react';
+import Button from './Button';
 
 interface PricingProps {
     onGetStarted?: () => void;
@@ -23,7 +24,8 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
         'WhatsApp Link',
         'Social Media Links',
         'Basic SEO Setup',
-        '2 Weeks Support'
+        '1 Month Physical Support',
+        'Online Support (Business Hours)'
       ],
       delivery: '7 Days',
       highlight: false
@@ -41,7 +43,8 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
         'Google Maps Integration',
         'Photo Gallery (20 images)',
         'Basic SEO Setup',
-        '1 Month Support'
+        '3 Months Physical Support',
+        'Online Support (Business Hours)'
       ],
       delivery: '10 Days',
       highlight: true,
@@ -60,7 +63,8 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
         'Payment Gateway Option',
         'Photo Gallery (50+ images)',
         'Free Domain & Hosting (1 Yr)',
-        '3 Months Support'
+        '6 Months Physical Support',
+        'Online Support (Business Hours)'
       ],
       delivery: '14 Days',
       highlight: false
@@ -80,7 +84,8 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
     { feature: "SEO Setup", starter: "Basic", pro: "Basic", premium: "Advanced" },
     { feature: "Domain & Hosting", starter: "+₹1000", pro: "+₹1000", premium: "Included" },
     { feature: "Revisions", starter: "2 Rounds", pro: "2 Rounds", premium: "3 Rounds" },
-    { feature: "Support", starter: "2 Weeks", pro: "1 Month", premium: "3 Months" },
+    { feature: "Physical Support", starter: "1 Month", pro: "3 Months", premium: "6 Months" },
+    { feature: "Online Support", starter: "Business Hours", pro: "Business Hours", premium: "Business Hours" },
   ];
 
   const monthlyServices = [
@@ -184,16 +189,14 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
                 <div className="text-xs text-neutral-500 font-bold uppercase tracking-widest mb-4 text-center">
                     Delivery: <span className="text-white">{plan.delivery}</span>
                 </div>
-                <button 
+                <Button 
+                    fullWidth
+                    variant={plan.highlight ? 'primary' : 'monochrome'}
                     onClick={() => handlePlanClick(plan.name, plan.price)}
-                    className={`w-full py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] active:scale-[0.98] ${
-                        plan.highlight 
-                        ? 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/20' 
-                        : 'bg-white text-black hover:bg-neutral-200'
-                    }`}
+                    className="py-4"
                 >
-                Get Started
-                </button>
+                    Get Started
+                </Button>
             </div>
           </div>
         ))}
@@ -278,11 +281,29 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
                   ))}
               </div>
               
-              <div className="mt-8 p-6 bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-blue-500/20 rounded-2xl text-center">
-                  <p className="text-neutral-300 text-sm mb-4">Need a custom quote for a specific requirement?</p>
-                  <button onClick={onGetStarted} className="text-blue-400 font-bold text-sm hover:text-white transition-colors flex items-center justify-center gap-2">
-                      Contact Sales <ChevronDown className="-rotate-90" size={14} />
-                  </button>
+              <div className="mt-8 relative group overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/30 p-8 transition-all hover:border-neutral-700">
+                  {/* Background Gradient Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                  <div className="relative z-10 flex flex-col items-center text-center">
+                      <div className="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center mb-4 text-white group-hover:scale-110 transition-transform duration-300 border border-neutral-700">
+                          <Sparkles size={20} className="text-blue-400" />
+                      </div>
+
+                      <h4 className="text-xl font-bold text-white mb-2">Need a Custom Solution?</h4>
+                      <p className="text-neutral-400 text-sm mb-6 max-w-xs mx-auto leading-relaxed">
+                          Need a custom quote for a specific requirement? We specialize in tailored architectures.
+                      </p>
+
+                      <Button 
+                          onClick={onGetStarted} 
+                          variant="monochrome" 
+                          className="w-full"
+                          icon={<ArrowRight size={16} />}
+                      >
+                          Contact Sales
+                      </Button>
+                  </div>
               </div>
           </div>
       </div>

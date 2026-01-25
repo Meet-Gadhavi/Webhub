@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Building2, User, Phone, Briefcase } from 'lucide-react';
 import gsap from 'gsap';
+import Button from './Button';
 
 interface ConsultationModalProps {
   isOpen: boolean;
@@ -165,12 +166,15 @@ Looking forward to discussing how you can help my business grow online! 🚀`;
                 </div>
             </div>
 
-            <button 
+            <Button 
                 type="submit" 
-                className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-xl flex items-center justify-center gap-2 mt-4 shadow-lg shadow-blue-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                fullWidth
+                variant="primary"
+                icon={<Send size={18} />}
+                className="mt-4 py-4"
             >
-                <Send size={18} /> Continue to WhatsApp
-            </button>
+                Continue to WhatsApp
+            </Button>
         </form>
       </div>
     </div>

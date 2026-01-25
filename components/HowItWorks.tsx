@@ -3,6 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { MessageCircle, PenTool, Rocket, Headphones, ArrowRight } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Button from './Button';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,9 +74,14 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ onNavigate }) => {
                         <p className="text-neutral-400 text-lg leading-relaxed mb-8">
                             A simple, transparent 4-step process designed to get your business online fast without the headache.
                         </p>
-                         <button onClick={onNavigate} className="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-neutral-200 transition-colors flex items-center gap-2 group">
-                            Start Your Project <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </button>
+                         <Button 
+                            onClick={onNavigate} 
+                            variant="monochrome"
+                            icon={<ArrowRight size={18} />}
+                            className="py-4 px-8"
+                        >
+                            Start Your Project
+                        </Button>
                     </div>
 
                     <div className="md:w-2/3 grid sm:grid-cols-2 gap-6">

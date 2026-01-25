@@ -37,19 +37,24 @@ const Industries: React.FC = () => {
     }, []);
 
     return (
-        <section ref={containerRef} className="py-20 px-4 md:px-10 max-w-7xl mx-auto">
-             <div className="text-center mb-12">
-                <h2 className="text-2xl font-bold text-white mb-4">Industries We Serve</h2>
-                <div className="h-1 w-20 bg-blue-500 mx-auto rounded-full"></div>
-             </div>
+        <section ref={containerRef} className="relative py-20 px-4 md:px-10 overflow-hidden">
+             {/* Background Gradient */}
+             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-neutral-950/50 to-neutral-950 pointer-events-none" />
              
-             <div className="flex flex-wrap justify-center gap-4">
-                {industries.map((ind, i) => (
-                    <div key={i} className="industry-pill opacity-0 flex items-center gap-3 px-6 py-4 bg-neutral-900 border border-neutral-800 rounded-full hover:border-blue-500 hover:bg-blue-500/10 hover:text-blue-500 text-neutral-300 transition-all cursor-default group">
-                        <span className="group-hover:scale-110 transition-transform duration-300">{ind.icon}</span>
-                        <span className="font-bold text-sm md:text-base">{ind.name}</span>
-                    </div>
-                ))}
+             <div className="max-w-7xl mx-auto relative z-10">
+                <div className="text-center mb-12">
+                    <h2 className="text-2xl font-bold text-white mb-4">Industries We Serve</h2>
+                    <div className="h-1 w-20 bg-blue-500 mx-auto rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                </div>
+                
+                <div className="flex flex-wrap justify-center gap-4">
+                    {industries.map((ind, i) => (
+                        <div key={i} className="industry-pill opacity-0 flex items-center gap-3 px-6 py-4 bg-neutral-900/80 backdrop-blur-md border border-neutral-800 rounded-full hover:border-blue-500 hover:bg-blue-500/10 hover:text-blue-500 text-neutral-300 transition-all cursor-default group hover:shadow-lg hover:shadow-blue-500/10">
+                            <span className="group-hover:scale-110 transition-transform duration-300">{ind.icon}</span>
+                            <span className="font-bold text-sm md:text-base">{ind.name}</span>
+                        </div>
+                    ))}
+                </div>
              </div>
         </section>
     );

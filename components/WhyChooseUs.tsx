@@ -12,7 +12,7 @@ const features = [
     {
         icon: <Wallet className="text-green-500" size={32} />,
         title: "Affordable Pricing",
-        line1: "Student-friendly rates",
+        line1: "Business-friendly rates",
         line2: "40% cheaper than agencies"
     },
     {
