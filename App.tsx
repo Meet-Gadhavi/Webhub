@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SmoothScroll from './components/SmoothScroll';
 import CustomCursor from './components/CustomCursor';
 import Hero from './components/Hero';
@@ -8,7 +8,6 @@ import ProjectDetail from './components/ProjectDetail';
 import Contact from './components/Contact';
 import Pricing from './components/Pricing';
 import SubscriptionScope from './components/SubscriptionScope';
-import AIChat from './components/AIChat';
 import NotificationToast from './components/NotificationToast';
 import TrustBadges from './components/TrustBadges';
 import Services from './components/Services';
@@ -23,6 +22,8 @@ import Team from './components/Team';
 import AnimatedWebhub from './components/AnimatedWebhub';
 import InfoModal from './components/InfoModal';
 import { Project, Notification, Feedback, SocialLinks } from './types';
+import { Menu, X } from 'lucide-react';
+import gsap from 'gsap';
 
 const INITIAL_PROJECTS: Project[] = [
   {
@@ -93,6 +94,10 @@ function App() {
   // Info Modal State
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [infoModalTab, setInfoModalTab] = useState('about');
+  
+  // Mobile Menu State
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const mobileMenuRef = React.useRef<HTMLDivElement>(null);
 
   const addNotification = (message: string, type: 'success' | 'error' | 'info') => {
     const id = Date.now();
@@ -116,7 +121,31 @@ function App() {
   const openInfoPage = (page: string) => {
       setInfoModalTab(page);
       setIsInfoModalOpen(true);
+      setIsMobileMenuOpen(false);
   };
+
+  const handleNavClick = (viewId: ViewState) => {
+      setView(viewId);
+      setIsMobileMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+        document.body.style.overflow = 'hidden';
+        gsap.fromTo(mobileMenuRef.current,
+            { x: '100%' },
+            { x: '0%', duration: 0.5, ease: 'power3.out' }
+        );
+        gsap.fromTo('.mobile-nav-item', 
+            { x: 50, opacity: 0 },
+            { x: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
+        );
+    } else {
+        document.body.style.overflow = '';
+        gsap.to(mobileMenuRef.current, { x: '100%', duration: 0.4, ease: 'power3.in' });
+    }
+  }, [isMobileMenuOpen]);
 
   if (view === 'admin') return (
       <Admin 
@@ -139,8 +168,8 @@ function App() {
       <CustomCursor />
       <NotificationToast notifications={notifications} removeNotification={removeNotification} />
       
-      <nav className="fixed top-0 left-0 w-full px-4 md:px-10 py-5 flex justify-between items-center z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
-        <div className="relative group cursor-pointer flex items-center gap-3" onClick={() => setView('home')}>
+      <nav className="fixed top-0 left-0 w-full px-6 md:px-10 py-5 flex justify-between items-center z-[80] bg-black/80 backdrop-blur-xl border-b border-white/5 transition-all duration-300">
+        <div className="relative group cursor-pointer flex items-center gap-3" onClick={() => handleNavClick('home')}>
             {logoUrl && (
                 <img src={logoUrl} alt="Webhub Logo" className="h-8 w-auto object-contain relative z-20" />
             )}
@@ -148,6 +177,7 @@ function App() {
             <AnimatedWebhub className="text-xl" isHeader={true} />
         </div>
         
+        {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 text-xs font-medium text-neutral-300 items-center">
              {[
                { id: 'home', label: 'HOME' },
@@ -157,7 +187,7 @@ function App() {
              ].map((item) => (
                <button 
                   key={item.id}
-                  onClick={() => setView(item.id as ViewState)}
+                  onClick={() => handleNavClick(item.id as ViewState)}
                   className="relative group px-3 py-1 cursor-pointer"
                >
                   <div className={`absolute top-0 bottom-0 left-0 right-0 bg-yellow-400 rounded-md transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] origin-left ${view === item.id ? 'w-full' : 'w-0 group-hover:w-full'}`}></div>
@@ -171,10 +201,47 @@ function App() {
              <button onClick={() => openInfoPage('contact')} className="hover:text-white transition-colors">CONTACT</button>
         </div>
 
-        <div className="md:hidden">
-             <button onClick={() => openInfoPage('contact')} className="text-white text-sm border border-white/20 px-3 py-1 rounded-full">Menu</button>
+        {/* Mobile Menu Button */}
+        <div className="md:hidden z-[90]">
+             <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+                className="text-white p-2"
+             >
+                {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+             </button>
         </div>
       </nav>
+
+      {/* Mobile Navigation Overlay */}
+      <div 
+        ref={mobileMenuRef}
+        className="fixed inset-0 bg-neutral-950 z-[85] pt-24 px-8 flex flex-col md:hidden transform translate-x-full"
+      >
+        <div className="flex flex-col gap-6 text-2xl font-bold text-white">
+             {[
+               { id: 'home', label: 'HOME' },
+               { id: 'services', label: 'SERVICES' },
+               { id: 'portfolio', label: 'PORTFOLIO' },
+               { id: 'pricing', label: 'PRICING' },
+             ].map((item) => (
+                <button 
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id as ViewState)}
+                  className={`mobile-nav-item text-left py-2 border-b border-neutral-800 ${view === item.id ? 'text-blue-500' : 'text-white'}`}
+                >
+                  {item.label}
+                </button>
+             ))}
+             <button onClick={() => openInfoPage('about')} className="mobile-nav-item text-left py-2 border-b border-neutral-800">ABOUT US</button>
+             <button onClick={() => openInfoPage('contact')} className="mobile-nav-item text-left py-2 border-b border-neutral-800">CONTACT</button>
+        </div>
+        
+        <div className="mt-auto mb-10 mobile-nav-item">
+             <p className="text-neutral-500 text-sm mb-2">Get in touch</p>
+             <p className="text-white text-lg font-bold">+91 9033281960</p>
+             <p className="text-white text-lg font-bold">nova.officialm63@gmail.com</p>
+        </div>
+      </div>
 
       <main>
         {view === 'home' && (
@@ -210,7 +277,6 @@ function App() {
         )}
       </main>
 
-      <AIChat />
       <ConsultationModal isOpen={isConsultModalOpen} onClose={() => setIsConsultModalOpen(false)} planDetails={selectedPlan} />
       <InfoModal isOpen={isInfoModalOpen} initialTab={infoModalTab} onClose={() => setIsInfoModalOpen(false)} />
       {selectedProject && <ProjectDetail project={selectedProject} onClose={() => setSelectedProject(null)} />}

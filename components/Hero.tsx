@@ -48,30 +48,30 @@ const Hero: React.FC<HeroProps> = ({ feedbacks, onConsult, onOpenConsultation })
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full h-screen flex flex-col justify-center items-center px-4 md:px-10 overflow-hidden bg-neutral-950"
+      className="relative w-full min-h-screen flex flex-col justify-center items-center px-4 md:px-10 overflow-hidden bg-neutral-950 pt-24 md:pt-0"
     >
       <BackgroundBeams className="absolute inset-0 z-0 opacity-40" />
       <ParticleBackground className="z-0 opacity-50" />
       
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-neutral-950/20 to-neutral-950 z-[1] pointer-events-none" />
 
-      <div className="z-10 text-center max-w-6xl relative">
-        <h1 ref={textRef} className="text-4xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tighter text-white">
+      <div className="z-10 text-center max-w-6xl relative w-full">
+        <h1 ref={textRef} className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight tracking-tighter text-white">
           Creating <br/>
           <FluidText text="What’s Next." className="pb-2" />
         </h1>
         
-        <p ref={subTextRef} className="mt-8 text-neutral-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
+        <p ref={subTextRef} className="mt-6 md:mt-8 text-neutral-400 text-base md:text-lg lg:text-xl max-w-2xl mx-auto font-light px-4">
           Webhub empowers businesses like yours with high-performance websites, automation, and strategic growth.
           Led by <span className="text-white font-semibold">Meet Gadhavi</span>.
         </p>
         
-        <div className="mt-10 flex flex-col md:flex-row gap-4 justify-center items-center">
+        <div className="mt-8 md:mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center w-full px-4 sm:px-0">
             <Button 
                 onClick={handleConsultClick}
                 variant="primary"
                 icon={<ArrowDown size={18} />}
-                className="py-4 px-8 text-base"
+                className="py-4 px-8 text-base w-full sm:w-auto"
             >
                 Get Free Consultation
             </Button>
@@ -79,19 +79,19 @@ const Hero: React.FC<HeroProps> = ({ feedbacks, onConsult, onOpenConsultation })
                 onClick={handleCallClick}
                 variant="outline"
                 icon={<Phone size={18} />}
-                className="py-4 px-8 text-base"
+                className="py-4 px-8 text-base w-full sm:w-auto"
             >
                 Call Now
             </Button>
         </div>
 
         {feedbacks.length > 0 && (
-            <div className="mt-16 max-w-3xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-                <div className="flex gap-8 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
+            <div className="mt-12 md:mt-16 max-w-3xl mx-auto overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] w-full">
+                <div className="flex gap-4 md:gap-8 animate-[scroll_30s_linear_infinite] whitespace-nowrap">
                     {feedbacks.concat(feedbacks).map((fb, i) => (
-                        <div key={i} className="flex items-center gap-3 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-lg px-5 py-2">
-                             <span className="text-sm text-neutral-300 font-medium">"{fb.text}"</span>
-                             <span className="text-xs text-neutral-500 uppercase tracking-wider">{fb.user}</span>
+                        <div key={i} className="flex items-center gap-3 bg-neutral-900/50 backdrop-blur-sm border border-neutral-800 rounded-lg px-4 py-2">
+                             <span className="text-xs md:text-sm text-neutral-300 font-medium">"{fb.text}"</span>
+                             <span className="text-[10px] md:text-xs text-neutral-500 uppercase tracking-wider">{fb.user}</span>
                         </div>
                     ))}
                 </div>
@@ -110,3 +110,4 @@ const Hero: React.FC<HeroProps> = ({ feedbacks, onConsult, onOpenConsultation })
 };
 
 export default Hero;
+        

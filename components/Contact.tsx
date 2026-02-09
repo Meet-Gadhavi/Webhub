@@ -10,25 +10,25 @@ interface ContactProps {
 
 const Contact: React.FC<ContactProps> = ({ onOpenPage }) => {
   return (
-    <footer className="relative bg-neutral-950 pt-24 pb-12 border-t border-neutral-900 overflow-hidden">
+    <footer className="relative bg-neutral-950 py-12 md:pt-24 md:pb-12 border-t border-neutral-900 overflow-hidden">
         {/* Decorative Gradients */}
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
         <div className="absolute top-[-200px] left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-900/20 rounded-full blur-[100px] pointer-events-none"></div>
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid md:grid-cols-2 gap-12 mb-20">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-12 md:mb-20">
             <div>
-                <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6">
+                <h2 className="text-4xl md:text-7xl font-bold tracking-tighter mb-6">
                   Creating<br/>
                   <FluidText text="What’s Next." className="pb-2" />
                 </h2>
                 <a 
                 href="mailto:nova.officialm63@gmail.com" 
-                className="text-xl md:text-2xl text-neutral-400 hover:text-white transition-colors border-b border-neutral-800 hover:border-white pb-1"
+                className="text-lg md:text-2xl text-neutral-400 hover:text-white transition-colors border-b border-neutral-800 hover:border-white pb-1 break-all"
                 >
                 nova.officialm63@gmail.com
                 </a>
-                <div className="mt-4 flex flex-col gap-2 text-neutral-400">
+                <div className="mt-4 flex flex-col gap-2 text-neutral-400 text-sm md:text-base">
                     <p>WhatsApp: +91 9033281960</p>
                     <p>Call: +91 8690787870</p>
                 </div>
@@ -50,8 +50,8 @@ const Contact: React.FC<ContactProps> = ({ onOpenPage }) => {
             </div>
         </div>
 
-        <div className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
-             <div className="flex gap-6 flex-wrap justify-center md:justify-start">
+        <div className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-4 text-xs text-neutral-600">
+             <div className="flex gap-4 md:gap-6 flex-wrap justify-center md:justify-start">
                  <button onClick={() => onOpenPage('about')} className="hover:text-neutral-400 transition-colors">About Us</button>
                  <button onClick={() => onOpenPage('contact')} className="hover:text-neutral-400 transition-colors">Contact Us</button>
                  <button onClick={() => onOpenPage('faq')} className="hover:text-neutral-400 transition-colors">FAQ</button>

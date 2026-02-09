@@ -1,5 +1,5 @@
 {
   "name": "Webhub",
-  "description": "A high-end, minimalist developer portfolio featuring smooth parallax scrolling (GSAP), custom animations, and an integrated Gemini AI assistant to answer questions about the developer's experience.",
+  "description": "A high-end, minimalist developer portfolio featuring smooth parallax scrolling (GSAP), custom animations.",
   "requestFramePermissions": []
 }

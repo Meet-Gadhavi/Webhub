@@ -52,13 +52,13 @@ const Projects: React.FC<ProjectsProps> = ({ projects, onProjectClick, title = "
   }, [projects]);
 
   return (
-    <section ref={containerRef} className="py-32 px-4 md:px-10 max-w-7xl mx-auto">
-      <div className="mb-24">
-        <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tighter">{title}</h2>
+    <section ref={containerRef} className="py-20 md:py-32 px-4 md:px-10 max-w-7xl mx-auto">
+      <div className="mb-16 md:mb-24">
+        <h2 className="text-4xl md:text-7xl font-bold mb-6 tracking-tighter text-white">{title}</h2>
         <div className="h-1 w-20 bg-blue-500"></div>
       </div>
 
-      <div className="flex flex-col gap-32">
+      <div className="flex flex-col gap-20 md:gap-32">
         {projects.map((project, index) => (
           <div 
             key={project.id}
@@ -74,15 +74,15 @@ const Projects: React.FC<ProjectsProps> = ({ projects, onProjectClick, title = "
                  </span>
               </div>
               
-              <h3 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-200 group-hover:text-white transition-colors duration-300">
+              <h3 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-neutral-200 group-hover:text-white transition-colors duration-300">
                 {project.title}
               </h3>
               
-              <p className="text-neutral-500 text-lg mb-8 leading-relaxed group-hover:text-neutral-300 transition-colors duration-500 line-clamp-3">
+              <p className="text-neutral-500 text-base md:text-lg mb-6 md:mb-8 leading-relaxed group-hover:text-neutral-300 transition-colors duration-500 line-clamp-3">
                 {project.description}
               </p>
               
-              <div className="flex flex-wrap gap-2 mb-10 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
+              <div className="flex flex-wrap gap-2 mb-8 md:mb-10 opacity-60 group-hover:opacity-100 transition-opacity duration-500">
                 {project.tech.map(t => (
                   <span key={t} className="px-3 py-1 border border-neutral-800 rounded-full text-xs text-neutral-400 bg-neutral-900/30 group-hover:border-neutral-700 transition-colors duration-300">
                     {t}
@@ -91,7 +91,7 @@ const Projects: React.FC<ProjectsProps> = ({ projects, onProjectClick, title = "
               </div>
               
               <div className="flex gap-4">
-                  <button className="inline-flex items-center gap-3 text-lg font-medium text-white group-hover:translate-x-2 transition-transform duration-300 w-fit">
+                  <button className="inline-flex items-center gap-3 text-base md:text-lg font-medium text-white group-hover:translate-x-2 transition-transform duration-300 w-fit">
                     View Live Demo
                     <span className="bg-neutral-800 text-white rounded-full p-2 group-hover:bg-blue-500 transition-colors duration-300">
                         <ArrowUpRight size={16} className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -132,3 +132,4 @@ const Projects: React.FC<ProjectsProps> = ({ projects, onProjectClick, title = "
 };
 
 export default Projects;
+        

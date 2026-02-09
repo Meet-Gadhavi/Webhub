@@ -57,14 +57,14 @@ const Testimonials: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 bg-neutral-900/30 border-y border-neutral-800 relative overflow-hidden">
+    <section ref={containerRef} className="py-16 md:py-24 bg-neutral-900/30 border-y border-neutral-800 relative overflow-hidden">
       {/* Dynamic Background */}
       <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] bg-gradient-move pointer-events-none" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 md:px-10 relative z-10">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Client Success Stories</h2>
           <p className="text-neutral-400">Don't just take our word for it.</p>
         </div>
@@ -96,3 +96,4 @@ const Testimonials: React.FC = () => {
 };
 
 export default Testimonials;
+        

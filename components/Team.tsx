@@ -57,7 +57,7 @@ const Team: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 px-4 md:px-10 bg-neutral-950 border-t border-neutral-900 relative overflow-hidden">
+    <section ref={containerRef} className="py-20 md:py-32 px-4 md:px-10 bg-neutral-950 border-t border-neutral-900 relative overflow-hidden">
       {/* Background Ambience */}
       <div className="team-bg-pulse absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-900/5 rounded-full blur-[120px] pointer-events-none z-0" />
@@ -66,10 +66,10 @@ const Team: React.FC = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header */}
-        <div className="team-header opacity-0 text-center mb-20">
+        <div className="team-header opacity-0 text-center mb-16 md:mb-20">
           <h2 className="text-blue-500 font-bold tracking-widest uppercase mb-4 text-sm">The Minds Behind Webhub</h2>
           <h3 className="text-4xl md:text-6xl font-bold text-white mb-6">Our Proud Team</h3>
-          <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+          <p className="text-neutral-400 text-base md:text-lg max-w-2xl mx-auto">
             Small team. Big vision. Real execution. Driven by passion, creativity, and purpose.
           </p>
         </div>
@@ -161,7 +161,7 @@ const Team: React.FC = () => {
 
                 <h4 className="text-2xl font-bold text-neutral-200 mb-2">PRASHANT GADHAVI</h4>
                 <p className="text-neutral-500 font-bold tracking-wider text-xs uppercase mb-6">Mentor & Guide</p>
-                <p className="text-neutral-400 italic font-light text-lg leading-relaxed max-w-xl mx-auto">
+                <p className="text-neutral-400 italic font-light text-base md:text-lg leading-relaxed max-w-xl mx-auto">
                     “We are building and running this agency under experienced elder guidance ensuring strong values, long-term vision, and disciplined growth.”
                 </p>
              </div>
@@ -174,3 +174,4 @@ const Team: React.FC = () => {
 };
 
 export default Team;
+        

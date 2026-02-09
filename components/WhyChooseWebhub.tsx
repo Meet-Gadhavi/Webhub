@@ -96,22 +96,22 @@ const WhyChooseWebhub: React.FC = () => {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 px-4 md:px-10 relative bg-neutral-950 overflow-hidden">
+    <section ref={containerRef} className="py-20 md:py-32 px-4 md:px-10 relative bg-neutral-950 overflow-hidden">
         {/* Background Decorative Elements */}
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-900/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-blue-900/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-purple-900/10 rounded-full blur-[80px] md:blur-[120px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
             {/* Header Section */}
-            <div className="wcw-header text-center mb-24">
-                <h2 className="text-4xl md:text-6xl font-bold text-white mb-4 tracking-tight flex items-center justify-center gap-2 flex-wrap">
-                    Why Choose <AnimatedWebhub className="text-4xl md:text-6xl" /> ?
+            <div className="wcw-header text-center mb-16 md:mb-24">
+                <h2 className="text-3xl md:text-6xl font-bold text-white mb-4 tracking-tight flex items-center justify-center gap-2 flex-wrap">
+                    Why Choose <AnimatedWebhub className="text-3xl md:text-6xl" /> ?
                 </h2>
                 <div className="flex flex-col items-center gap-4">
-                    <p className="font-cursive text-4xl md:text-5xl text-blue-400 rotate-[-2deg]">
+                    <p className="font-cursive text-3xl md:text-5xl text-blue-400 rotate-[-2deg]">
                         Creating What’s Next.
                     </p>
-                    <p className="text-neutral-400 text-lg md:text-xl max-w-2xl mt-4 leading-relaxed">
+                    <p className="text-neutral-400 text-base md:text-xl max-w-2xl mt-4 leading-relaxed px-4">
                         At Webhub, we don’t just build websites — we build digital foundations that help businesses grow.
                     </p>
                 </div>
@@ -150,3 +150,4 @@ const WhyChooseWebhub: React.FC = () => {
 };
 
 export default WhyChooseWebhub;
+        

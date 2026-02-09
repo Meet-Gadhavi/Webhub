@@ -68,7 +68,8 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ onNavigate }) => {
 
             <div className="container mx-auto px-4 md:px-10 relative z-10">
                 <div className="flex flex-col md:flex-row gap-16 items-start">
-                    <div className="md:w-1/3 sticky top-24">
+                    {/* Changed sticky to md:sticky to prevent mobile issues */}
+                    <div className="md:w-1/3 relative md:sticky md:top-24">
                         <h2 className="text-blue-500 font-bold tracking-widest uppercase mb-4 text-sm">Process</h2>
                         <h3 className="text-4xl md:text-5xl font-bold text-white mb-6">How It Works</h3>
                         <p className="text-neutral-400 text-lg leading-relaxed mb-8">
@@ -78,7 +79,7 @@ const HowItWorks: React.FC<HowItWorksProps> = ({ onNavigate }) => {
                             onClick={onNavigate} 
                             variant="monochrome"
                             icon={<ArrowRight size={18} />}
-                            className="py-4 px-8"
+                            className="py-4 px-8 w-full md:w-auto"
                         >
                             Start Your Project
                         </Button>

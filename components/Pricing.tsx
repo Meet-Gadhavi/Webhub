@@ -138,9 +138,9 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
   };
 
   return (
-    <section className="py-24 px-4 md:px-10 max-w-7xl mx-auto">
+    <section className="py-20 md:py-24 px-4 md:px-10 max-w-7xl mx-auto">
       {/* Header */}
-      <div className="mb-20 text-center">
+      <div className="mb-16 md:mb-20 text-center">
         <h2 className="text-sm font-bold text-blue-500 tracking-widest uppercase mb-3">Transparent Pricing</h2>
         <h2 className="text-4xl md:text-6xl font-bold mb-6 tracking-tighter text-white">Choose Your Plan</h2>
         <p className="text-neutral-400 max-w-xl mx-auto text-lg">
@@ -149,7 +149,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
       </div>
 
       {/* Main Plans */}
-      <div className="grid lg:grid-cols-3 gap-8 mb-24 relative z-10">
+      <div className="grid lg:grid-cols-3 gap-8 mb-20 md:mb-24 relative z-10">
         {websitePlans.map((plan, index) => (
           <div 
             key={index} 
@@ -203,7 +203,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
       </div>
 
       {/* Comparison Table Toggle */}
-      <div className="mb-24">
+      <div className="mb-20 md:mb-24">
         <button 
             onClick={() => setShowComparison(!showComparison)}
             className="mx-auto flex items-center gap-2 text-neutral-400 hover:text-white transition-colors border-b border-dashed border-neutral-700 hover:border-white pb-1"
@@ -213,8 +213,8 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
         </button>
 
         <div className={`grid transition-all duration-500 ease-in-out overflow-hidden ${showComparison ? 'grid-rows-[1fr] opacity-100 mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
-            <div className="overflow-x-auto min-h-0 bg-neutral-900/30 border border-neutral-800 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+            <div className="overflow-x-auto min-h-0 bg-neutral-900/30 border border-neutral-800 rounded-2xl pb-4">
+                <table className="w-full text-left border-collapse min-w-[600px] md:min-w-[800px]">
                     <thead>
                         <tr className="border-b border-neutral-800">
                             <th className="p-6 text-neutral-500 font-medium text-sm uppercase tracking-wider w-1/4">Feature</th>
@@ -226,7 +226,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
                     <tbody className="divide-y divide-neutral-800">
                         {comparisonData.map((row, idx) => (
                             <tr key={idx} className="hover:bg-neutral-800/30 transition-colors">
-                                <td className="p-4 px-6 text-neutral-300 font-medium text-sm">{row.feature}</td>
+                                <td className="p-4 px-6 text-neutral-300 font-medium text-sm whitespace-nowrap">{row.feature}</td>
                                 <td className="p-4 text-center border-l border-neutral-800">{renderCheck(row.starter)}</td>
                                 <td className="p-4 text-center border-l border-neutral-800 bg-blue-900/5">{renderCheck(row.pro)}</td>
                                 <td className="p-4 text-center border-l border-neutral-800">{renderCheck(row.premium)}</td>
@@ -235,11 +235,12 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
                     </tbody>
                 </table>
             </div>
+            <p className="text-center text-xs text-neutral-600 mt-2 md:hidden">Scroll right to view more</p>
         </div>
       </div>
 
       {/* Additional Services Grid */}
-      <div className="grid lg:grid-cols-2 gap-16">
+      <div className="grid lg:grid-cols-2 gap-12 md:gap-16">
           {/* Monthly Services */}
           <div>
               <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
@@ -312,3 +313,4 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
 };
 
 export default Pricing;
+        
