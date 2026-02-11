@@ -1,7 +1,14 @@
 
 import React, { useState } from 'react';
-import { Check, X, Star, Zap, Shield, Globe, PenTool, Layout, Server, Mail, Code, ChevronDown, ChevronUp, Sparkles, ArrowRight } from 'lucide-react';
+import { Check, X, Star, Zap, Shield, Globe, PenTool, Layout, Server, Mail, Code, ChevronDown, ChevronUp, Sparkles, ArrowRight, CreditCard } from 'lucide-react';
 import Button from './Button';
+
+// Extend Window interface for Razorpay
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
 
 interface PricingProps {
     onGetStarted?: () => void;
@@ -15,6 +22,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
     {
       name: 'STARTER',
       price: '₹4,999',
+      priceRaw: 1, // Charging ₹1 as requested, while displaying ₹4,999
       period: '/year',
       description: 'Perfect for new businesses looking to establish a digital presence.',
       features: [
@@ -33,6 +41,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
     {
       name: 'PROFESSIONAL',
       price: '₹9,999',
+      priceRaw: 9999,
       period: '/year',
       description: 'Ideal for growing businesses needing more engagement features.',
       features: [
@@ -53,6 +62,7 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
     {
       name: 'PREMIUM',
       price: '₹19,999',
+      priceRaw: 19999,
       period: '/year',
       description: 'Full-scale solution for established businesses with advanced needs.',
       features: [
@@ -126,14 +136,53 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
     return <span className="text-sm text-neutral-300">{val}</span>;
   };
 
-  const handlePlanClick = (planName: string, price: string) => {
-      const name = planName.charAt(0) + planName.slice(1).toLowerCase();
-      if (onPlanSelect) {
-          onPlanSelect(name, price);
+  const handleRazorpayPayment = (plan: typeof websitePlans[0]) => {
+    if (!window.Razorpay) {
+        alert("Razorpay SDK not loaded. Please check your internet connection.");
+        return;
+    }
+
+    const options = {
+        key: "rzp_live_SEru7tZ3y0x3sl", // Live Key ID
+        amount: plan.priceRaw * 100, // Amount is in currency subunits. 100 paise = 1 Rupee.
+        currency: "INR",
+        name: "Webhub",
+        description: `Payment for ${plan.name} Plan`,
+        // image: "https://your-logo-url.com/logo.png", // Optional: Add your logo URL here
+        handler: function (response: any) {
+            alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+            // In a real app, you would verify signature on backend here
+        },
+        prefill: {
+            name: "",
+            email: "",
+            contact: ""
+        },
+        theme: {
+            color: "#3B82F6"
+        }
+    };
+
+    const rzp1 = new window.Razorpay(options);
+    rzp1.open();
+  };
+
+  const handlePlanClick = (plan: typeof websitePlans[0]) => {
+      // Logic: If Starter Plan, trigger Razorpay directly (charges ₹1).
+      // For others, trigger consultation or Razorpay based on preference.
+      // Based on prompt, Starter is the main one for payments.
+
+      if (plan.name === 'STARTER') {
+          handleRazorpayPayment(plan);
       } else {
-          // Fallback
-          const message = encodeURIComponent(`I am interested to make Website with ${name} package for my business, i need to grow more with Webhub let's talk..`);
-          window.open(`https://wa.me/919033281960?text=${message}`, '_blank');
+          // Default behavior for other plans (Consultation)
+          const name = plan.name.charAt(0) + plan.name.slice(1).toLowerCase();
+          if (onPlanSelect) {
+              onPlanSelect(name, plan.price);
+          } else {
+              const message = encodeURIComponent(`I am interested to make Website with ${name} package for my business, i need to grow more with Webhub let's talk..`);
+              window.open(`https://wa.me/919033281960?text=${message}`, '_blank');
+          }
       }
   };
 
@@ -166,9 +215,10 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
             )}
             
             <h3 className="text-xl font-bold text-neutral-200 mb-2 tracking-wide">{plan.name}</h3>
-            <div className="flex items-baseline gap-1 mb-4">
+            <div className="flex items-baseline gap-2 mb-4 flex-wrap">
                <span className="text-4xl font-bold text-white">{plan.price}</span>
-               <span className="text-neutral-500">{plan.period}</span>
+               {/* Original price display removed as per new requirement to just show 4999 (even though charging 1) */}
+               <span className="text-neutral-500 text-sm ml-1">{plan.period}</span>
             </div>
             <p className="text-neutral-400 text-sm mb-8 leading-relaxed h-10">
               {plan.description}
@@ -192,10 +242,11 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
                 <Button 
                     fullWidth
                     variant={plan.highlight ? 'primary' : 'monochrome'}
-                    onClick={() => handlePlanClick(plan.name, plan.price)}
+                    onClick={() => handlePlanClick(plan)}
                     className="py-4"
+                    icon={plan.name === 'STARTER' ? <CreditCard size={18}/> : undefined}
                 >
-                    Get Started
+                    {plan.name === 'STARTER' ? 'Pay Now' : 'Get Started'}
                 </Button>
             </div>
           </div>
@@ -313,4 +364,3 @@ const Pricing: React.FC<PricingProps> = ({ onGetStarted, onPlanSelect }) => {
 };
 
 export default Pricing;
-        
